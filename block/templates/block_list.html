@@ -3,13 +3,34 @@
  <head>
   <meta charset="utf-8">
   <title>Python部落论坛</title>
+  <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
  </head>
- <body>
+ <body
+   <div class= "container">
+      <div class= "row">
+       <div class= "col-sm-10 col-md-6">
+	<table class="table table-hover">
+         <tr>
+	     <td>A</td>
+	     <td>B</td>
+	 </tr>
+         <tr>
+             <td>C</td>
+	     <td>D</td>
+	 </tr>
+	</table>
+       </div>
+       <div class= "col-sm-2 col-md-6">
+	   <button type="button" class="btn btn-success">提交</button>
+	   <div class="well">793821984921840912840</div>
+       </div>
+     </div>
+   </div>
   <h1>Python部落论坛</h1>
   {% for block in blocks %}
   <div class="blockitem">
-   {{ block.name }}
-   {{ block.description }}
+   {{ block.namechar }}
+   {{ block.descriptionchar }}
    {{ block.admin.username }}
   </div>
   {% endfor %}
