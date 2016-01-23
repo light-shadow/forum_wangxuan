@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Python部落论坛</title>
+ </head>
+ <body>
+  <h1>Python部落论坛</h1>
+  {% for block in blocks %}
+  <div class="blockitem">
+   {{ block.name }}
+   {{ block.description }}
+   {{ block.admin.username }}
+  </div>
+  {% endfor %}
+ </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
