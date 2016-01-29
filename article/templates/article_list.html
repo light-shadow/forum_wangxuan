@@ -1,39 +1,27 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Python部落论坛</title>
-    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  </head>
-  <body>
-    <div class= "container">
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-4"><h1>Python部落论坛</h1></div>
-    </div>
-    {% for block in blocks %}
-    <div class="blockitem">
-      <div class="row"> 
-          <div class="col-md-1"></div>
-          <div class="col-md-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h2 class="panel-title"><h4>{{block.namechar}}</h4></h2>
-              </div>
-              <div class="panel-body"><h5>{{ block.descriptionchar}}</h5></div>
-	    </div>
-	  </div>
-          <div class="col-md-3">
-            <div class="panel panel-default">
-              <div class="panel-heading"><h4>管理员</h4></div>
-                <div class="panel-body">        
-                  <h5> {{ block.admin.username}}</h5>
-		</div>
-	      </div>
-	    </div>
-	  </div>
-      </div>
-    </div>
-    {% endfor %}
-  </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-10 col-md-offset-1">
+  <ol class="breadcrumb">
+     <a href="{% url 'block_list' %}">首页</a>/
+       <li class="active">{{ b.name }}</li>
+  </ol>
+  <a href="{% url 'article_create' b.id  %}" class="btn btn-primary">发表文章</a>
+  </br></br>
+  <table class="table table-bordered">
+      <tr>
+        <th>状态</th>
+        <th>标题</th>
+        <th>作者</th>
+        <th>最后更新时间</th>
+      </tr>
+      {% for article in articles %}
+      <tr>
+       <td>{{ article.get_status_display }}</td>
+       <td>{{ article.title }}</td>
+       <td>{{ article.owner }}</td>
+       <td>{{ article.last_update_timestamp|date:"Y-m-d P"}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+</div>
+{% endblock %}

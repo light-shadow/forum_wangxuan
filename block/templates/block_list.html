@@ -7,37 +7,36 @@
   </head>
   <body>
     <div class= "container">
-    </div>
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-	<div class="jumbotron","boreded">
-          <h1><center>Python部落论坛</center></h1>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="jumbotron","boreded">
+            <h1><center>Python部落论坛</center></h1>
+          </div>
         </div>
       </div>
-    </div>
-    {% for block in blocks %}
-    <div class="blockitem">
-      <div class="row"> 
+      {% for b in blocks %}
+      <div class="blockitem">
+        <div class="row"> 
           <div class="col-md-1"></div>
           <div class="col-md-10">
 	    <div class="panel panel-success">
               <div class="panel-heading">
 	        <h3 class="panel-title"> 
-		      <a href="/article/lists/">{{block.namechar}}</a>
-		      <span  class="pull-right">管理员</span>
-	        </h3>
+                  <a href="{% url 'article_list' b.id %}">{{b.name}}</a>
+		   <span  class="pull-right">管理员</span>
+	         </h3>
 	      </div>
 	      <div class="panel-body">
-		      {{ block.descriptionchar}}
-		      <span class="pull-right">{{block.admin.username}}</span>
+	        {{ b.description}}
+	        <span class="pull-right">{{b.admin.username}}</span>
 	      </div>
             </div>
 	  </div>
-	  <div class="col-md-1"></div>
-          </div>
+          <div class="col-md-1"></div>
+        </div>
       </div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </body>
 </html>
 

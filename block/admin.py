@@ -6,8 +6,8 @@ from models import Block
 
 
 class BlockAdmin(admin.ModelAdmin):
-    list_display = ("namechar", "descriptionchar", "admin", "create_timestamp",
+    list_display = ("name", "description", "admin", "create_timestamp",
             "last_update_timestamp")
-    list_filter = ("namechar",)
+    list_filter = ("name",)
 
 admin.site.register(Block, BlockAdmin)

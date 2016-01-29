@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 
 
 class Block(models.Model):
-    namechar = models.CharField(u"名字",
+    name = models.CharField(u"名字",
             max_length=40)
-    descriptionchar = models.CharField(u"描述",
+    description = models.CharField(u"描述",
             max_length=100)
     admin = models.ForeignKey(User, verbose_name="管理员")
 
@@ -15,7 +15,7 @@ class Block(models.Model):
     last_update_timestamp = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
-        return self.namechar
+        return self.name
 
     class Meta:
         verbose_name = (u"板块")
