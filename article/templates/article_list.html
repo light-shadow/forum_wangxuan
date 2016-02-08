@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="col-md-10 col-md-offset-1">
+  {% if messages %}
+    {% for message in messages %}
+       <div class="alert alert-info">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
   <ol class="breadcrumb">
      <a href="{% url 'block_list' %}">首页</a>/
        <li class="active">{{ b.name }}</li>
@@ -10,14 +15,14 @@
   <table class="table table-bordered">
       <tr>
         <th>状态</th>
-        <th>标题</th>
+    	<th>标题</th>
         <th>作者</th>
         <th>最后更新时间</th>
       </tr>
       {% for article in articles %}
       <tr>
        <td>{{ article.get_status_display }}</td>
-       <td>{{ article.title }}</td>
+       <td><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a></td>
        <td>{{ article.owner }}</td>
        <td>{{ article.last_update_timestamp|date:"Y-m-d P"}}</td>
       </tr>

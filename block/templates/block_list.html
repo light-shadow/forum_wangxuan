@@ -14,28 +14,38 @@
           </div>
         </div>
       </div>
-      {% for b in blocks %}
-      <div class="blockitem">
-        <div class="row"> 
-          <div class="col-md-1"></div>
-          <div class="col-md-10">
-	    <div class="panel panel-success">
+      <div class="row"> 
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+          <div class="blockitem">
+              {% for b in blocks %}
+            <div class="panel panel-success">
               <div class="panel-heading">
-	        <h3 class="panel-title"> 
+	            <h3 class="panel-title"> 
                   <a href="{% url 'article_list' b.id %}">{{b.name}}</a>
-		   <span  class="pull-right">管理员</span>
-	         </h3>
-	      </div>
-	      <div class="panel-body">
-	        {{ b.description}}
-	        <span class="pull-right">{{b.admin.username}}</span>
-	      </div>
+		           <span  class="pull-right">管理员</span>
+	            </h3>
+	          </div>
+	          <div class="panel-body">
+	            {{ b.description}}
+	           <span class="pull-right">{{b.admin.username}}</span>
+	          </div>
             </div>
-	  </div>
-          <div class="col-md-1"></div>
+            {% endfor %}
+	      </div>
         </div>
+        <div class="col-md-2">
+          <pre><center>
+           {% if user.is_authenticated %}
+               <p>{{ user.username }}.欢迎来到论坛.</p>
+               <a href="{% url 'logout_then_login' %}">登出</a>
+           {% else %}
+               <p>匿名用户.请<a href="{% url 'login' %}">登陆</a>.</p>
+           {% endif %}</center>
+          </pre>
+        </div>
+        <div class="col-md-1"></div>
       </div>
-      {% endfor %}
     </div>
   </body>
 </html>

@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-
+from secret import USER, PASSWORD
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = "smtp.126.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = USER
+EMAIL_HOST_PASSWORD = PASSWORD
+
 
 # Application definition
 
@@ -39,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'block',
     'article',
+    'usercenter',
 )
 
 MIDDLEWARE_CLASSES = (
