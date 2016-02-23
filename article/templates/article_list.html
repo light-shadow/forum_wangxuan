@@ -28,5 +28,7 @@
       </tr>
       {% endfor %}
   </table>
+  <br />
+  {% include "component/paginator.html" with param_name="page_no" %}
 </div>
 {% endblock %}

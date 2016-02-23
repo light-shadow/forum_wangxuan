@@ -35,12 +35,12 @@ def register(request):
             user.is_active = False
             user.save()
 
-            new_code = str(uuid.uuid4()).repalce("-", "")
+            new_code = str(uuid.uuid4()).replace("-", "")
             expire_time = datetime.datetime.now() + datetime.timedelta(days=1)
-            code_record = ActivateCode(owner=user, code=new_code(), expire_timestamp=expire_time)
+            code_record = ActivateCode(owner=user, code=new_code, expire_timestamp=expire_time)
             code_record.save()
             activate_link = "http://%s%s" % (request.get_host(), reverse("usercenter_activate", args=[new_code]))
-            send_mail(u"[python部落]激活邮件", u"您的激活码为:%s" % activate_link, "wangxuan8901@126.com", [email], fail_silently=False)
+            send_mail(u"[python部落]激活邮件", u"您的激活链接为:%s" % activate_link, "wangxuan8901@126.com", [email], fail_silently=False)
         else:
             return render_to_response("usercenter_register.html", {"error": error},
                                       context_instance=RequestContext(request))
@@ -48,7 +48,7 @@ def register(request):
 
 
 def activate(request, code):
-    query = ActivateCode.objects.filter(code=code, expire_time_stamp_gte=datetime.datetime.now())
+    query = ActivateCode.objects.filter(code=code, expire_timestamp__gte=datetime.datetime.now())
     if query > 0:
         code_record = query[0]
         code_record.owner.is_active = True

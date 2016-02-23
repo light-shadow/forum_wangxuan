@@ -14,8 +14,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 from secret import USER, PASSWORD
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+LOGIN_REDIRECT_URL = "/"
+DEFAULT_FROM_EMAIL = "wangxuan8901@126.com"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'block',
     'article',
     'usercenter',
+    'comment',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -93,9 +94,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
