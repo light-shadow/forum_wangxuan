@@ -20,11 +20,11 @@
           <div class="blockitem">
               {% for b in blocks %}
             <div class="panel panel-default">
-              <div class="panel-heading"style="background:light-grey" >
-	            <h3 class="panel-title"> 
+              <div class="panel-heading" style="background:light-grey" >
+	            <a class="panel-title"> 
                   <a href="{% url 'article_list' b.id %}">{{b.name}}</a>
 		           <span  class="pull-right">管理员</span>
-	            </h3>
+                </a>
 	          </div>
 	          <div class="panel-body">
 	            {{ b.description}}

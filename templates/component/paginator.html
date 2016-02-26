@@ -1,6 +1,6 @@
   <nav>
     <ul class="pagination">
-      {% if pagination.has_revious %}
+      {% if pagination.has_previous %}
       <li>
         <a href="?{{ param_name }}=1" aria-label="Previous">
           <span aria-hidden="true">首页</span>
@@ -13,7 +13,7 @@
       </li>
       {% endif %}
       {% for no in pagination.page_links %}
-       <li {% if current_no == no %} class="active"{% endif %}><a href="?{{ param_name }}={{ no }}">{{ no }}</a></li>
+       <li {% if pagination.current_no == no %} class="active"{% endif %}><a href="?{{ param_name }}={{ no }}">{{ no }}</a></li>
       {% endfor %}                                            
       {% if pagination.has_next %}
       <li>

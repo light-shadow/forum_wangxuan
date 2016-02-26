@@ -22,6 +22,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^usercenter/', include('usercenter.urls')),
+    url(r'^comment/', include('comment.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^article/', include("article.urls")),
     url(r'^$', "block.views.block_list", name="block_list"),

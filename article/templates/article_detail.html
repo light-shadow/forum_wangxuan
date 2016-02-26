@@ -7,7 +7,7 @@
         <li class="active">{{ article.title }}</li>
     </ol>
   </div>
-  <table　class="atble table-hover">
+  <table　class="table table-hover">
     <tr>
       <div class="col-md-2 col-md-offset-2">
         <td>作者:{{ article.owner }}</td>
@@ -19,4 +19,33 @@
       </div>
     </tr>
   </table>
+  {% include "component/paginator.html" with param_name="comment_page_no" %}
+  <br />
+  {% if user.is_authenticated %} 
+      <div class="form-group">
+	<br /><label for="title" class="col-md-2 col-md-offset-2 control-label"><br /><br />{{ user.username }}</label>
+      </div>
+      <div class="col-md-6 col-md-offset-4">
+	    <textarea name="content" class="form-control" rows="6" placeholder="内容"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="col-md-6 col-md-offset-4">
+	  <br /><button type="comment" class="btn btn-primary">发表评论</button><br /><br /><br />
+	</div>
+      </div>
+  {% endif %}
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#commentBtn").click(function){
+     var article_id = {{ article.id}};
+     var to_comment_id = 0;
+     var comment = $("#commentContent").val();
+     var page_cnt = {{ pagination.page_cnt}};
+     var param = {"article_id":article_id,"to_comment_id":to_comment_id,"content":content};
+     $.post("{% url 'create_comment' %}", param,function(){
+       $("#commentContent").val("");
+       window.location.href = "{% url 'article_detail' article.id %}?comment_page_no="+(page_cnt + 1);
+   })
+  })
+})
 {% endblock %}
