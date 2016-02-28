@@ -7,17 +7,26 @@
         <li class="active">{{ article.title }}</li>
     </ol>
   </div>
-  <table　class="table table-hover">
+  <table　class="table table-bordered">
     <tr>
       <div class="col-md-2 col-md-offset-2">
         <td>作者:{{ article.owner }}</td>
       </div>
       <div class="col-md-6 col-md-offset-4">
-	<td>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}<td> 
+	<td>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</td> 
 	<td>标题：{{ article.title|linebreaksbr }}</td>
         <td>{{ article.content |linebreaksbr }}</td>
       </div>
     </tr>
+    <tr>
+      <div class="col-md-2 col-md-offset-2">
+	<td>评论者:{{ comment.owner }}</td>
+      </div>
+      <div class="col-md-6 col-md-offset-4">
+	<td>发表于： {{ comments.last_update_timestamp|date:"Y-m-d P" }}</td>
+	<td>{{ comments.content }}</td>
+      </div>
+    </tr>	
   </table>
   {% include "component/paginator.html" with param_name="comment_page_no" %}
   <br />
@@ -34,9 +43,11 @@
 	</div>
       </div>
   {% endif %}
-  <script type="text/javascript" src="static/lib/jquery/jquery-1.9.1.min.js">
-  $(document).ready(function(){
-    $("#commentBtn").click(function){
+  <script type="text/javascript" src="/static/lib/jquery/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="/static/lib/jquery/jquery.csrf.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function()({
+    $("#commentBtn").click(function)({
      var article_id = {{ article.id}};
      var to_comment_id = 0;
      var comment = $("#commentContent").val();
