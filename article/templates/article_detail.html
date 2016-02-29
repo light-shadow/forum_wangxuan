@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="row">
   <div class="col-md-10 col-md-offset-1">
     <ol class="breadcrumb">
       <a href="{% url 'block_list' %}">首页</a>/
@@ -7,35 +8,43 @@
         <li class="active">{{ article.title }}</li>
     </ol>
   </div>
-  <table　class="table table-bordered">
-    <tr>
-      <div class="col-md-2 col-md-offset-2">
-        <td>作者:{{ article.owner }}</td>
-      </div>
-      <div class="col-md-6 col-md-offset-4">
-	<td>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</td> 
-	<td>标题：{{ article.title|linebreaksbr }}</td>
-        <td>{{ article.content |linebreaksbr }}</td>
-      </div>
-    </tr>
-    <tr>
-      <div class="col-md-2 col-md-offset-2">
-	<td>评论者:{{ comment.owner }}</td>
-      </div>
-      <div class="col-md-6 col-md-offset-4">
-	<td>发表于： {{ comments.last_update_timestamp|date:"Y-m-d P" }}</td>
-	<td>{{ comments.content }}</td>
-      </div>
-    </tr>	
-  </table>
+</div>
+<div class="row">
+  <div class="col-sm-12 ">
+    <table　class="table table-bordered">
+      <tr>
+        <td class="author">
+	   <center>作者:{{ article.owner }}</center>
+	</td>
+	<td class="content">
+	  <h6>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</h6> 
+	  <h4>标题：{{ article.title|linebreaksbr }}</h4>
+          {% autoescape off %}
+	  <div>{{ article.content |linebreaksbr }}</div>
+	  {% endautoescape %}
+	</td>
+      </tr>
+       {% for comment in comments %}
+      <tr>
+	<td>评论者:{{ comment.owner.username }}</td>
+	<td>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</td>
+	<td>{{ comment.content }}</td>
+      </tr>
+       {% endfor %}
+    </table><br />
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
   {% include "component/paginator.html" with param_name="comment_page_no" %}
-  <br />
+  </div>
+</div>
   {% if user.is_authenticated %} 
       <div class="form-group">
-	<br /><label for="title" class="col-md-2 col-md-offset-2 control-label"><br /><br />{{ user.username }}</label>
+	<label for="title" class="col-md-2 col-md-offset-2 control-label"><br /><br />{{ user.username }}</label>
       </div>
       <div class="col-md-6 col-md-offset-4">
-	    <textarea name="content" id="commentContent"class="form-control" rows="6" placeholder="内容"></textarea>
+	<textarea name="content" id="commentContent"class="form-control" rows="6" placeholder="内容"></textarea>
       </div>
       <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
