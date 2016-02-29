@@ -11,7 +11,7 @@
 </div>
 <div class="row">
   <div class="col-sm-12 ">
-    <table　class="table table-bordered">
+    <table　class="table table-bordered mainTable">
       <tr>
         <td class="author">
 	   <center>作者:{{ article.owner }}</center>
@@ -34,6 +34,17 @@
     </table><br />
   </div>
 </div>
+<style type="text/css">
+.mainTable td.author {
+  width:20%;
+}
+.mainTable td.content {
+  width:80%;
+}
+blockquote {
+  font-size:13px;
+}
+</style>
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
   {% include "component/paginator.html" with param_name="comment_page_no" %}
