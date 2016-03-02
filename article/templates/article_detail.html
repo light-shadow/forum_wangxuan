@@ -10,11 +10,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12 ">
-    <table　class="table table-bordered mainTable">
+  <div class="col-sm-10 col-sm-offset-1">
+    <table  class="table table-bordered mainTable">
       <tr>
         <td class="author">
-	   <center>作者:{{ article.owner }}</center>
+	    <br /><br /><center>作者:{{ article.owner }}</center>
 	</td>
 	<td class="content">
 	  <h6>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</h6> 
@@ -26,9 +26,15 @@
       </tr>
        {% for comment in comments %}
       <tr>
-	<td>评论者:{{ comment.owner.username }}</td>
-	<td>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</td>
-	<td>{{ comment.content }}</td>
+	<td class="author">
+	  <center>评论者:{{ comment.owner.username }}</center>
+	</td>
+	<td class="content">
+	  <h6>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</h6>
+	  {% autoescape off %}
+	  <div>{{ comment.content |linebreaksbr }}</div>
+	  {% endautoescape %}
+	</td>
       </tr>
        {% endfor %}
     </table><br />
@@ -55,25 +61,25 @@ blockquote {
 	<label for="title" class="col-md-2 col-md-offset-2 control-label"><br /><br />{{ user.username }}</label>
       </div>
       <div class="col-md-6 col-md-offset-4">
-	<textarea name="content" id="commentContent"class="form-control" rows="6" placeholder="内容"></textarea>
+	<textarea  id="commentContent" class="form-control" rows="6" placeholder="内容"></textarea>
       </div>
       <div class="form-group">
         <div class="col-md-6 col-md-offset-4">
-	  <br /><button type="comment" id="commentBtn" class="btn btn-primary">发表评论</button><br /><br /><br />
+	  <br /><button  id="commentBtn" class="btn btn-primary">发表评论</button><br /><br /><br />
 	</div>
       </div>
   {% endif %}
   <script type="text/javascript" src="/static/lib/jquery/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="/static/lib/jquery/jquery.csrf.js"></script>
   <script type="text/javascript">
-  $(document).ready(function()({
+  $(document).ready(function(){
     $("#commentBtn").click(function)({
-     var article_id = {{ article.id}};
+     var article_id = {{ article.id }};
      var to_comment_id = 0;
      var comment = $("#commentContent").val();
-     var page_cnt = {{ pagination.page_cnt}};
-     var param = {"article_id":article_id,"to_comment_id":to_comment_id,"content":content};
-     $.post("{% url 'create_comment' %}", param,function(){
+     var page_cnt = {{ pagination.page_cnt }};
+     var param = {"article_id":article_id,"to_comment_id":to_comment_id,"content":comment};
+     $.post("{% url 'create_comment' %}", param, function(){
        $("#commentContent").val("");
        window.location.href = "{% url 'article_detail' article.id %}?comment_page_no="+(page_cnt + 1);
    })
