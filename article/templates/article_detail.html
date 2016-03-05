@@ -27,7 +27,7 @@
        {% for comment in comments %}
       <tr>
 	<td class="author">
-	  <center>评论者:{{ comment.owner.username }}</center>
+	   <br /><center>评论者:{{ comment.owner.username }}</center>
 	</td>
 	<td class="content">
 	  <h6>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</h6>
@@ -40,6 +40,26 @@
     </table><br />
   </div>
 </div>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+  {% include "component/paginator.html" with param_name="comment_page_no" %}
+  </div>
+</div>
+  {% if user.is_authenticated %} 
+  <table class="table mainTable">
+    <tr>
+      <td class="author">
+	<br />
+	<center>评论者：{{ user.username }}</center>
+      </td>
+      <td class="content">
+	<textarea  id="commentContent" class="form-control" rows="6" placeholder="内容">
+	</textarea>
+	<br /><button  id="commentBtn" class="btn btn-primary">发表评论</button><br /><br /><br />
+      </td>
+    </tr>
+  </table>
+  {% endif %} 
 <style type="text/css">
 .mainTable td.author {
   width:20%;
@@ -51,29 +71,11 @@ blockquote {
   font-size:13px;
 }
 </style>
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-  {% include "component/paginator.html" with param_name="comment_page_no" %}
-  </div>
-</div>
-  {% if user.is_authenticated %} 
-      <div class="form-group">
-	<label for="title" class="col-md-2 col-md-offset-2 control-label"><br /><br />{{ user.username }}</label>
-      </div>
-      <div class="col-md-6 col-md-offset-4">
-	<textarea  id="commentContent" class="form-control" rows="6" placeholder="内容"></textarea>
-      </div>
-      <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-	  <br /><button  id="commentBtn" class="btn btn-primary">发表评论</button><br /><br /><br />
-	</div>
-      </div>
-  {% endif %}
   <script type="text/javascript" src="/static/lib/jquery/jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="/static/lib/jquery/jquery.csrf.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
-    $("#commentBtn").click(function)({
+    $("#commentBtn").click(function(){
      var article_id = {{ article.id }};
      var to_comment_id = 0;
      var comment = $("#commentContent").val();
