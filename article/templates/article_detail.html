@@ -14,29 +14,37 @@
     <table  class="table table-bordered mainTable">
       <tr>
         <td class="author">
-	    <br /><br /><center>作者:{{ article.owner }}</center>
-	</td>
-	<td class="content">
-	  <h6>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</h6> 
-	  <h4>标题：{{ article.title|linebreaksbr }}</h4>
+	      <br /><br /><center>作者:{{ article.owner }}</center>
+	    </td>
+	    <td class="content">
+	     <h6>发表于：{{ article.last_update_timestamp|date:"Y-m-d P" }}</h6> 
+	     <h4>标题：{{ article.title|linebreaksbr }}</h4>
           {% autoescape off %}
-	  <div>{{ article.content |linebreaksbr }}</div>
-	  {% endautoescape %}
-	</td>
+	     <div>{{ article.content |linebreaksbr }}</div>
+	     {% endautoescape %}
+	    </td>
       </tr>
-       {% for comment in comments %}
-      <tr>
+      {% for comment in comments %}
+      <tr {% if  forloop.first %}id="lastComment"{% endif %}>
 	<td class="author">
-	   <br /><center>评论者:{{ comment.owner.username }}</center>
+	  <br /><center>评论者:{{ comment.owner.username }}</center>
 	</td>
-	<td class="content">
-	  <h6>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</h6>
-	  {% autoescape off %}
-	  <div>{{ comment.content |linebreaksbr }}</div>
-	  {% endautoescape %}
-	</td>
+        <td class="content">
+          {% with comment.to_comment as to_comment %}
+            {% if to_comment %}
+            <blockquote>
+              <b>{{ to_comment.owner.username }}:</b>
+              <br />
+              {{ to_comment.content|linebreaksbr }}
+            </blockquote>
+            {% endif %}
+            <h6>发表于： {{ comment.last_update_timestamp|date:"Y-m-d P" }}</h6>
+            <a href="#commentContent" class="btn btn-primary pull-right subCommentBtn" data-comment-id="{{ comment.id }}" data-owner="{{ comment.owner.username }}" >回复</a>
+	    <div>{{ comment.content |linebreaksbr }}</div>
+          {% endwith %}
+        </td>
       </tr>
-       {% endfor %}
+      {% endfor %}
     </table><br />
   </div>
 </div>
@@ -53,9 +61,8 @@
 	<center>评论者：{{ user.username }}</center>
       </td>
       <td class="content">
-	<textarea  id="commentContent" class="form-control" rows="6" placeholder="内容">
-	</textarea>
-	<br /><button  id="commentBtn" class="btn btn-primary">发表评论</button><br /><br /><br />
+          <textarea  id="commentContent" class="form-control" rows="6"></textarea>
+	      <br /><a  id="commentBtn" class="btn btn-primary">发表评论</a><br /><br /><br />
       </td>
     </tr>
   </table>
@@ -75,17 +82,29 @@ blockquote {
   <script type="text/javascript" src="/static/lib/jquery/jquery.csrf.js"></script>
   <script type="text/javascript">
   $(document).ready(function(){
-    $("#commentBtn").click(function(){
+     if (window.location.href.indexOf("golast") > 0){
+          window.location.href = window.location.href + "#lastComment";
+     }
      var article_id = {{ article.id }};
-     var to_comment_id = 0;
-     var comment = $("#commentContent").val();
      var page_cnt = {{ pagination.page_cnt }};
-     var param = {"article_id":article_id,"to_comment_id":to_comment_id,"content":comment};
+     var to_comment_id = 0;
+
+     $("#commentBtn").click(function(){
+     var comment = $("#commentContent").val();
+     var param = {"article_id": article_id,"to_comment_id": to_comment_id,"content": comment};
      $.post("{% url 'create_comment' %}", param, function(){
-       $("#commentContent").val("");
-       window.location.href = "{% url 'article_detail' article.id %}?comment_page_no="+(page_cnt + 1);
+         $("#commentContent").val("");
+         to_comment_id = 0; 
+       window.location.href = "{% url 'article_detail' article.id %}?comment_page_no=" +  1 + "&golast=1";
+    });
    })
-  })
-})
+     $(".subCommentBtn").click(function(e){
+     var btn = $(e.target);
+     to_comment_id  = parseInt(btn.attr("data-comment-id"));
+     $("#commentContent").attr("placeholder", "回复:" + btn.attr("data-owner"));
+     $("#commentContent").focus();
+     return false;
+     })
+  });
   </script>
 {% endblock %}
