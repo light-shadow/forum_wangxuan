@@ -48,7 +48,7 @@ def article_detail(request, article_id):
     article_id = int(article_id)
     page_no = int(request.GET.get("comment_page_no", 1))
     article = Article.objects.get(id=article_id)
-    comments = Comment.objects.filter(article=article).order_by("-last_update_timestamp")
+    comments = Comment.objects.filter(article=article, status=0)
     comments, pagination_data = paginate_queryset(comments, page_no, cnt_per_page=3)
     return render_to_response("article_detail.html", {"comments": comments,
                               "article": article, "pagination": pagination_data},

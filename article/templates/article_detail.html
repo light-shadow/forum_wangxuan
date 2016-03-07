@@ -25,7 +25,7 @@
 	    </td>
       </tr>
       {% for comment in comments %}
-      <tr {% if  forloop.first %}id="lastComment"{% endif %}>
+      <tr {% if  forloop.last %}id="lastComment"{% endif %}>
 	<td class="author">
 	  <br /><center>评论者:{{ comment.owner.username }}</center>
 	</td>
@@ -95,7 +95,7 @@ blockquote {
      $.post("{% url 'create_comment' %}", param, function(){
          $("#commentContent").val("");
          to_comment_id = 0; 
-       window.location.href = "{% url 'article_detail' article.id %}?comment_page_no=" +  1 + "&golast=1";
+       window.location.href = "{% url 'article_detail' article.id %}?comment_page_no=" +  (page_cnt + 1) + "&golast=1";
     });
    })
      $(".subCommentBtn").click(function(e){

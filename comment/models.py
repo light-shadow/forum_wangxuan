@@ -16,7 +16,7 @@ class Comment(models.Model):
 
     create_timestamp = models.DateTimeField(auto_now_add=True)
     last_update_timestamp = models.DateTimeField(auto_now=True)
-    
+
     @property
     def to_comment(self):
         if not self.to_comment_id:
