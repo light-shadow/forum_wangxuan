@@ -7,11 +7,11 @@ from comment.models import Comment
 
 class CommentInline(admin.TabularInline):
     model = Comment
-    readonly_fields = ("block", "owner", "content", "status", "last_update_timestamp")
+    readonly_fields = ("block", "owner", "content", "status", "last_update_timestamp")  # 设置只读字段
     fieldsets = (
-        (u"文章详情", {
-            "classes": ("collapse"),
-            "fields": ("owner", "status", "content", "create_timestamp")
+        (u"评论详情", {
+            "classes": ('collapse',),
+            "fields": ("owner", "content", "status", "last_update_timestamp")
         }),
     )
 CommentInline.can_delete = False
@@ -27,11 +27,12 @@ class ArticleAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
     readonly_fields = ("title", "block", "owner", "content", "status", "create_timestamp", "last_update_timestamp")
     fieldsets = (
-        (None, {
+        (u"文章详情", {
+            "classes": ('collapse',),
             "fields": ("title", "owner", "content", "status", "create_timestamp")
         }),
         (u"其他的", {
-            "classes": ("collapse"),
+            "classes": ('collapse',),
             "fields": ("block", "last_update_timestamp")
         }),
     )

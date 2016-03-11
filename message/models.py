@@ -14,3 +14,7 @@ class UserMessage(models.Model):
 
     def __unicode__(self):
         return self.content
+
+    class Meta:
+        verbose_name = (u"消息")
+        verbose_name_plural = (u"消息")

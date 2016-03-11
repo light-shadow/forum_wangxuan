@@ -16,6 +16,8 @@ from secret import USER, PASSWORD
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOGIN_REDIRECT_URL = "/"
 DEFAULT_FROM_EMAIL = "wangxuan8901@126.com"
+STORGE_PATH = "/Users/wangxuan/Documents/userres"
+USERRES_URLBASE = "http://res.myforum.com/"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 

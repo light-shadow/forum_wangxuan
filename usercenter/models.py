@@ -11,3 +11,15 @@ class ActivateCode(models.Model):
 
     creat_timestamp = models.DateTimeField(auto_now_add=True)
     last_update_timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class UserProfile(models.Model):
+    owner = models.ForeignKey(User)
+    avatar = models.CharField(max_length=300, blank=True)
+
+    creat_timestamp = models.DateTimeField(auto_now_add=True)
+    last_update_timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = (u"用户资料")
+        verbose_name_plural = (u"用户资料")
